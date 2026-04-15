@@ -77,6 +77,30 @@ h2 {
   font-size: 0.97rem;
 }
 
+/* ── Scuba image ── */
+.scuba-img-wrap {
+  margin-top: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(167, 139, 250, 0.25);
+}
+
+.scuba-img {
+  width: 100%;
+  display: block;
+  border-radius: 1rem;
+}
+
+.scuba-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  background: linear-gradient(135deg, #a8edea, #60c6f7);
+  height: 180px;
+  border-radius: 1rem;
+}
+
 /* ── Learning list ── */
 .learning ul {
   list-style: none;
