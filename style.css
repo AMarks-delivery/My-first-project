@@ -140,3 +140,116 @@ h2 {
   font-size: 1.3rem;
   flex-shrink: 0;
 }
+
+/* ── Guestbook ── */
+.gb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+.gb-field label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.gb-field input,
+.gb-field textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 2px solid #e9e0ff;
+  border-radius: 0.6rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #3d3d3d;
+  background: #faf8ff;
+  transition: border-color 0.15s ease;
+  resize: vertical;
+}
+
+.gb-field input:focus,
+.gb-field textarea:focus {
+  outline: none;
+  border-color: #a78bfa;
+}
+
+.gb-btn {
+  width: 100%;
+  padding: 0.7rem;
+  background: linear-gradient(135deg, #a78bfa, #ff6f91);
+  color: white;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.gb-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.gb-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gb-status {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  min-height: 1.2em;
+  text-align: center;
+}
+
+.gb-messages {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gb-entry {
+  background: #f9f5ff;
+  border-left: 4px solid #ff6f91;
+  border-radius: 0.6rem;
+  padding: 0.75rem 1rem;
+}
+
+.gb-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.3rem;
+}
+
+.gb-entry-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #2d2d2d;
+}
+
+.gb-entry-time {
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+.gb-entry-msg {
+  font-size: 0.92rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.gb-empty {
+  font-size: 0.9rem;
+  color: #aaa;
+  text-align: center;
+  padding: 1rem 0;
+}

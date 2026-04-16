@@ -46,7 +46,93 @@
         </li>
       </ul>
     </section>
+
+    <section class="guestbook">
+      <h2>Guestbook</h2>
+      <form id="guestbook-form">
+        <div class="gb-field">
+          <label for="gb-name">Name</label>
+          <input type="text" id="gb-name" placeholder="Your name" required />
+        </div>
+        <div class="gb-field">
+          <label for="gb-message">Message</label>
+          <textarea id="gb-message" placeholder="Leave a message..." rows="3" required></textarea>
+        </div>
+        <button type="submit" class="gb-btn">Sign Guestbook</button>
+        <p id="gb-status" class="gb-status"></p>
+      </form>
+
+      <div id="gb-messages" class="gb-messages"></div>
+    </section>
   </div>
+
+  <script>
+    const API = 'https://guestbook-api-production-fa44.up.railway.app/messages';
+
+    function timeAgo(dateStr) {
+      const seconds = Math.floor((Date.now() - new Date(dateStr)) / 1000);
+      if (seconds < 60) return 'just now';
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+      const days = Math.floor(hours / 24);
+      return `${days} day${days !== 1 ? 's' : ''} ago`;
+    }
+
+    async function loadMessages() {
+      const container = document.getElementById('gb-messages');
+      try {
+        const res = await fetch(API);
+        const messages = await res.json();
+        if (!messages.length) {
+          container.innerHTML = '<p class="gb-empty">No messages yet — be the first!</p>';
+          return;
+        }
+        container.innerHTML = messages.reverse().map(m => `
+          <div class="gb-entry">
+            <div class="gb-entry-header">
+              <span class="gb-entry-name">${m.name}</span>
+              <span class="gb-entry-time">${timeAgo(m.created_at || m.createdAt || m.timestamp)}</span>
+            </div>
+            <p class="gb-entry-msg">${m.message}</p>
+          </div>
+        `).join('');
+      } catch {
+        container.innerHTML = '<p class="gb-empty">Could not load messages.</p>';
+      }
+    }
+
+    document.getElementById('guestbook-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('gb-status');
+      const btn = e.target.querySelector('button');
+      const name = document.getElementById('gb-name').value.trim();
+      const message = document.getElementById('gb-message').value.trim();
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      try {
+        const res = await fetch(API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, message })
+        });
+        if (!res.ok) throw new Error();
+        status.textContent = 'Message posted!';
+        status.style.color = '#a78bfa';
+        e.target.reset();
+        loadMessages();
+      } catch {
+        status.textContent = 'Something went wrong. Please try again.';
+        status.style.color = '#ff6f91';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sign Guestbook';
+      }
+    });
+
+    loadMessages();
+  </script>
 
 </body>
 </html>
